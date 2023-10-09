@@ -22,17 +22,20 @@
                                 <?php
                                 foreach($productos as $producto)
                                 {
-                                    echo '<option value="'.$producto["id"].'">'.$producto["nombre_producto"].'</option>';
+                                    echo '<option value="'.$producto["id"].'" data-stock="'.$producto["stock_producto"].'">'.$producto["nombre_producto"].'</option>';
                                 }
                                 ?>
             
               </select>
               <div class="invalid-feedback">Producto es obligatorio!</div>
+              <div id="infoStock"></div>
             </div>
+
+       
 
             <div class="mb-3">
               <label>Cantidad</label>
-              <input type="number" name="cantidad" class="form-control" placeholder="Ingresa Cantidad" required>
+              <input type="number" name="cantidad" id="cantidad" class="form-control" placeholder="Ingresa Cantidad" required>
               <div class="invalid-feedback">La cantidad es requerida!</div>
             </div>
 
@@ -144,17 +147,34 @@
 
 
   <script>
+
+
+
+
+
     $(function() {
-      // agregar venta..
-      $("#form_agregar_venta").submit(function(e) {
-        e.preventDefault();
-        const formData = new FormData(this);
-        if (!this.checkValidity()) {
-          e.preventDefault();
-          $(this).addClass('was-validated');
-        } else {
-          $("#boton_agregar_venta").text("Agregando...");
-          $.ajax({
+
+     
+      
+// Agregar venta..
+$("#form_agregar_venta").submit(function(e) {
+    e.preventDefault(); // Evita el envío del formulario por defecto
+    const formData = new FormData(this);
+
+    var stock = parseInt($("#producto option:selected").data("stock"), 10); // Obtener el stock como un número entero
+    var cantidadCompra = parseInt($("#cantidad").val(), 10); // Obtener la cantidad de compra como un número entero
+
+    if (cantidadCompra > stock) {
+      Swal.fire({
+      icon: 'warning',
+      title: 'No hay Stock suficiente',
+      text: 'Intenta de nuevo',
+})
+    } else if (!this.checkValidity()) {
+        $(this).addClass('was-validated');
+    } else {
+        $("#boton_agregar_venta").text("Agregando...");
+        $.ajax({
             url: '<?= base_url('venta/agregar') ?>',
             method: 'post',
             data: formData,
@@ -167,18 +187,25 @@
                 $("#form_agregar_venta")[0].reset();
                 $("#form_agregar_venta").removeClass('was-validated');
                 Swal.fire(
-                  'Agregado !',
-                  response.message,
-                  'success'
+                    'Agregado !',
+                    response.message,
+                    'success'
                 );
                 fetchAllPosts();
-              
-              $("#boton_agregar_venta").text("Agregar Venta");
-            }
-          });
-        }
-      });
 
+                $("#boton_agregar_venta").text("Agregar Venta");
+            }
+        });
+    }
+});
+
+/// Validar Stock
+$("#producto").change(function() {
+                var productoSeleccionado = $("#producto").val();
+                var stock = $("#producto option:selected").data("stock");
+                $("#infoStock").html("Del producto: " + productoSeleccionado + ", hay: " + stock + " unidades en stock");
+            
+            });
 
 
 
