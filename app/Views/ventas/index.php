@@ -3,47 +3,43 @@
 <?= $this->section('contenido')  ?>
 
  <!-- add new post modal start -->
- <div class="modal fade" id="modal_agregar_producto" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+ <div class="modal fade" id="modal_agregar_venta" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel">Crear Venta</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form action="#" method="POST" id="form_agregar_producto" novalidate>
+        <form action="#" method="POST" id="form_agregar_venta" novalidate>
           <div class="modal-body p-5">
-            <div class="mb-3">
-              <label>Nombre Producto</label>
-              <input type="text" name="nombre_producto" class="form-control" placeholder="Ingresa Producto" required>
-              <div class="invalid-feedback">El nombre Producto es requerido!</div>
-            </div>
+            
 
             <div class="mb-3">
-              <label>Categoría Producto</label>
-              <select name="categoria_producto" class="form-control" id="categoria_producto" required>
+              <label>Producto</label>
+              <select name="producto" class="form-control" id="producto" required>
           
-              <option disabled selected>Seleccione una categoría...</option>
+              <option disabled selected>Seleccione un producto</option>
                                 <?php
-                              /*  foreach($categorias as $categoria)
+                                foreach($productos as $producto)
                                 {
-                                    echo '<option value="'.$categoria["id"].'">'.$categoria["nombre_categoria"].'</option>';
+                                    echo '<option value="'.$producto["id"].'">'.$producto["nombre_producto"].'</option>';
                                 }
-                              */  ?>
+                                ?>
             
               </select>
-              <div class="invalid-feedback">Categoria de productto es requerida!</div>
+              <div class="invalid-feedback">Producto es obligatorio!</div>
             </div>
 
             <div class="mb-3">
-              <label>Stock</label>
-              <input type="number" name="stock_producto" class="form-control" placeholder="Ingresa Stock" required>
-              <div class="invalid-feedback">El stock es requerido!</div>
+              <label>Cantidad</label>
+              <input type="number" name="cantidad" class="form-control" placeholder="Ingresa Cantidad" required>
+              <div class="invalid-feedback">La cantidad es requerida!</div>
             </div>
 
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-            <button type="submit" class="btn btn-success" id="boton_agregar_producto">Crear Producto</button>
+            <button type="submit" class="btn btn-success" id="boton_agregar_venta">Registrar Venta</button>
           </div>
         </form>
       </div>
@@ -57,48 +53,43 @@
 
 
     <!-- edit post modal start -->
-    <div class="modal fade" id="modal_editar_producto" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="modal_editar_venta" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Editar Productoo</h5>
+          <h5 class="modal-title" id="staticBackdropLabel">Editar Venta</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form action="#" method="POST"  id="form_editar_producto" novalidate>
+        <form action="#" method="POST"  id="form_editar_venta" novalidate>
           <input type="hidden" name="id" id="pid">
           <div class="modal-body p-5">
-            <div class="mb-3">
-
+          <div class="mb-3">
               <label>Producto</label>
-              <input type="text" name="nombre_producto" id="nombre_producto" class="form-control" required>
-              <div class="invalid-feedback">Producto es obligatoria</div>
-            </div>
-
-            <div class="mb-3">
-              <label>Categoría Producto</label>
-              <select name="categoria_producto" class="form-control" id="categoria_producto" required>
-              
-                     <?php /*
-                                foreach($categorias as $categoria)
+              <select name="producto" class="form-control" id="producto" required>
+          
+              <?php
+                                foreach($productos as $producto)
                                 {
-                                    echo '<option value="'.$categoria["id"].'">'.$categoria["nombre_categoria"].'</option>';
-                                } */
-                    ?>
+                                    echo '<option value="'.$producto["id"].'">'.$producto["nombre_producto"].'</option>';
+                                }
+                                ?>
+            
               </select>
-              <div class="invalid-feedback">Categoria de producto es requerida!</div>
+              <div class="invalid-feedback">Producto es obligatorio!</div>
             </div>
- 
 
+          
+ 
             <div class="mb-3">
-              <label>Stock</label>
-              <input type="number" name="stock_producto" id="stock_producto" class="form-control" required>
-              <div class="invalid-feedback">El stock es requerido!</div>
+              <label>Cantidad</label>
+              <input type="number" name="cantidad" id="cantidad" class="form-control" required>
+              <div class="invalid-feedback">La cantidad es requerida!</div>
             </div>
 
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-            <button type="submit" class="btn btn-success" id="boton_editar_producto">Actualizar Producto</button>
+            <button type="submit" class="btn btn-success" id="boton_editar_venta">Actualizar Venta</button>
           </div>
         </form>
       </div>
@@ -119,17 +110,16 @@
        
         
             <div class="text-secondary fw-bold fs-3">Ventas</div>
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal_agregar_producto">Crear Venta</button>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal_agregar_venta">Crear Venta</button>
           </div>
           <table class="table-bordered mt-3">
     <th>ID</th>
-    <th>Nombre</th>
-    <th>Categoría</th>
-    <th>Stock</th>
+    <th>Producto</th>
+    <th>Cantidad</th>
     <th>Fecha Creación</th>
     <th>Editar</th>
     <th>Eliminar</th> 
-    <tbody id="mostrar_productos">
+    <tbody id="mostrar_ventas">
    
     <tr>
         <td colspan="5">
@@ -155,17 +145,17 @@
 
   <script>
     $(function() {
-      // add new post ajax request
-      $("#form_agregar_producto").submit(function(e) {
+      // agregar venta..
+      $("#form_agregar_venta").submit(function(e) {
         e.preventDefault();
         const formData = new FormData(this);
         if (!this.checkValidity()) {
           e.preventDefault();
           $(this).addClass('was-validated');
         } else {
-          $("#boton_agregar_producto").text("Agregando...");
+          $("#boton_agregar_venta").text("Agregando...");
           $.ajax({
-            url: '<?= base_url('producto/agregar') ?>',
+            url: '<?= base_url('venta/agregar') ?>',
             method: 'post',
             data: formData,
             contentType: false,
@@ -173,9 +163,9 @@
             processData: false,
             dataType: 'json',
             success: function(response) {
-                $("#modal_agregar_producto").modal('hide');
-                $("#form_agregar_producto")[0].reset();
-                $("#form_agregar_producto").removeClass('was-validated');
+                $("#modal_agregar_venta").modal('hide');
+                $("#form_agregar_venta")[0].reset();
+                $("#form_agregar_venta").removeClass('was-validated');
                 Swal.fire(
                   'Agregado !',
                   response.message,
@@ -183,7 +173,7 @@
                 );
                 fetchAllPosts();
               
-              $("#boton_agregar_producto").text("Agregando...");
+              $("#boton_agregar_venta").text("Agregar Venta");
             }
           });
         }
@@ -192,20 +182,19 @@
 
 
 
-      // Editar Categoria
+      // Editar Venta
       
-      $(document).delegate('.boton_editar_producto', 'click', function(e) {
+      $(document).delegate('.boton_editar_venta', 'click', function(e) {
         e.preventDefault();
         const id = $(this).attr('id');
         $.ajax({
-          url: '<?= base_url('producto/editar/') ?>/' + id,
+          url: '<?= base_url('venta/editar/') ?>/' + id,
           method: 'get',
           success: function(response) {
             $("#pid").val(response.message.id);
           
-            $("#nombre_producto").val(response.message.nombre_producto);
-            $("#categoria_producto").val(response.message.categoria_producto);
-            $("#stock_producto").val(response.message.stock_producto);
+            $("#producto").val(response.message.producto);
+            $("#cantidad").val(response.message.cantidad);
           }
         });
       });
@@ -214,17 +203,17 @@
 
 
 
-      // Actualizar Categoria
-      $("#form_editar_producto").submit(function(e) {
+      // Actualizar Venta
+      $("#form_editar_venta").submit(function(e) {
         e.preventDefault();
         const formData = new FormData(this);
         if (!this.checkValidity()) {
           e.preventDefault();
           $(this).addClass('was-validated');
         } else {
-          $("#boton_editar_producto").text("Actualizando...");
+          $("#boton_editar_venta").text("Actualizando...");
           $.ajax({
-            url: '<?= base_url('producto/actualizar') ?>',
+            url: '<?= base_url('venta/actualizar') ?>',
             method: 'post',
             data: formData,
             contentType: false,
@@ -232,21 +221,21 @@
             processData: false,
             dataType: 'json',
             success: function(response) {
-              $("#modal_editar_producto").modal('hide');
+              $("#modal_editar_venta").modal('hide');
               Swal.fire(
                 'Actualizado !!!',
                  response.message,
                 'success'
               );
               fetchAllPosts();
-              $("#boton_editar_producto").text("Actualizar Producto");
+              $("#boton_editar_venta").text("Actualizar Venta");
             }
           });
         }
       });
 
       // delete post ajax request
-      $(document).delegate('.boton_eliminar_producto', 'click', function(e) {
+      $(document).delegate('.boton_eliminar_venta', 'click', function(e) {
         e.preventDefault();
         const id = $(this).attr('id');
         Swal.fire({
@@ -262,7 +251,7 @@
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
-              url: '<?= base_url('producto/eliminar/') ?>/' + id,
+              url: '<?= base_url('venta/eliminar/') ?>/' + id,
               method: 'get',
               success: function(response) {
                 Swal.fire(
@@ -280,15 +269,15 @@
 
 
 
-      // Mostrar Listado de Categorias
+      // Mostrar Ventas Realizadas
       fetchAllPosts();
 
       function fetchAllPosts() {
         $.ajax({
-          url: '<?= base_url('producto/mostrar') ?>',
+          url: '<?= base_url('venta/mostrar') ?>',
           method: 'get',
           success: function(response) {
-            $("#mostrar_productos").html(response.message);
+            $("#mostrar_ventas").html(response.message);
           }
         });
       }

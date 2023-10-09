@@ -56,7 +56,7 @@
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         
         <div class="info">
-          <a href="#" class="d-block">USER</a>
+          <a href="<?= base_url().route_to('producto_index') ?>" class="d-block">USER</a>
         </div>
       </div>
 
@@ -82,7 +82,7 @@
 
           <li class="nav-header">TIENDA</li>
           <li class="nav-item">
-            <a href="<?= base_url().route_to('categorias_index') ?>" class="nav-link">
+            <a href="<?= base_url().route_to('producto_index') ?>" class="nav-link">
             <i class="fa-solid fa-house mr-2 ml-2"> </i>
               <p>
                 Inicio
