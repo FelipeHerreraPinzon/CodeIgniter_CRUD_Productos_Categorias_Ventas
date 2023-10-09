@@ -234,7 +234,7 @@
         }
       });
 
-      // delete post ajax request
+      // eliminar venta
       $(document).delegate('.boton_eliminar_venta', 'click', function(e) {
         e.preventDefault();
         const id = $(this).attr('id');

@@ -183,7 +183,7 @@
                 );
                 fetchAllPosts();
               
-              $("#boton_agregar_producto").text("Agregando...");
+              $("#boton_agregar_producto").text("Agregar Producto");
             }
           });
         }

@@ -5,7 +5,7 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'ProductoController::index');
+$routes->get('/', 'VentaController::index');
 
 
 $routes->get('categorias', 'CategoriaController::index', ['as'=>'categorias_index']);
