@@ -22,7 +22,7 @@
               <label>Categoría Producto</label>
               <select name="categoria_producto" class="form-control" id="categoria_producto" required>
           
-              <option disabled selected>Seleccione una categoría...</option>
+              <option disabled readonly selected></option>
                                 <?php
                                 foreach($categorias as $categoria)
                                 {
@@ -192,7 +192,7 @@
 
 
 
-      // Editar Categoria
+      // Editar Producto
       
       $(document).delegate('.boton_editar_producto', 'click', function(e) {
         e.preventDefault();

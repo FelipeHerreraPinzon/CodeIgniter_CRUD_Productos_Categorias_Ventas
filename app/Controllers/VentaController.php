@@ -9,6 +9,10 @@ use App\Models\Producto;
 
 class VentaController extends BaseController
 {
+
+
+
+
     public function index()
     {
         $productoModel = new Producto();
@@ -26,19 +30,65 @@ class VentaController extends BaseController
        
 
         $datos = [
+        
             'producto' => $this->request->getPost('producto'),
             'cantidad' => $this->request->getPost('cantidad'),
             'created_at' => date('Y-m-d H:i:s')
         ];
+   
+        $modelProducto = new Producto();
+        $producto = $modelProducto->where('id', $datos['producto'])->first();
+        $stockActual = $producto['stock_producto'];
+        $cantidadComprada = $datos['cantidad'];
+           
+        $nuevoStock = $stockActual - $cantidadComprada;
+        $id = $datos['producto'];
 
-       
-            $ModelVenta = new Venta();
-            $ModelVenta->save($datos);
-            return $this->response->setJSON([
-                'error' => false,
-                'message' => 'Venta Registrada exitosamente !!!'
-            ]);
+
+ 
+    $updateData = [
+     
+        'stock_producto' => $nuevoStock
+    ];
+
+    $modelProducto->update($id, $updateData);
+
+    $ModelVenta = new Venta();
+    $ModelVenta->save($datos);
+
+
+    return $this->response->setJSON([
+        'error' => false,
+        'message' => 'Venta Registrada exitosamente !!!'
+    ]);
+
+
+
+    return $this->response->setJSON([
+        'error' => false,
+        'message' => 'Stock Actualizado !!!'
+    ]);
+
+
+
         
+      /*
+        return $this->response->setJSON([
+            'producto' => $producto,
+            'stocactual' =>  $stockActual,
+            'cantidadComprada' =>  $cantidadComprada,
+            'nuevoStock' =>   $nuevoStock,
+            'id' =>   $id,
+
+        ]);
+
+        die();
+
+        */
+
+           
+        
+            
     }
 
      // mostrar ventas
@@ -73,7 +123,7 @@ class VentaController extends BaseController
 
 
      // Editar Venta
-     public function editar($id = null) {
+     public function editar($id) {
         $ModelVenta = new Venta();
         $venta = $ModelVenta->find($id);
         return $this->response->setJSON([

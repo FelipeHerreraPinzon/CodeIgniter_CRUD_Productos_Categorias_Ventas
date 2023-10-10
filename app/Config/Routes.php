@@ -33,4 +33,8 @@ $routes->post('venta/actualizar', 'VentaController::actualizar', ['as'=>'actuali
 
 
 
+
+
+
+
        

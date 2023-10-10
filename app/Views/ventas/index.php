@@ -19,12 +19,12 @@
               <select name="producto" class="form-control" id="producto" required>
           
               <option disabled selected>Seleccione un producto</option>
-                                <?php
-                                foreach($productos as $producto)
-                                {
-                                    echo '<option value="'.$producto["id"].'" data-stock="'.$producto["stock_producto"].'">'.$producto["nombre_producto"].'</option>';
-                                }
-                                ?>
+              <?php
+                      foreach($productos as $producto)
+                      {
+                          echo '<option value="'.$producto["id"].'" data-stock="'.$producto["stock_producto"].'" data-id="'.$producto["id"].'">'.$producto["nombre_producto"].'</option>';
+                      }
+              ?>
             
               </select>
               <div class="invalid-feedback">Producto es obligatorio!</div>
@@ -85,7 +85,7 @@
  
             <div class="mb-3">
               <label>Cantidad</label>
-              <input type="number" name="cantidad" id="cantidad" class="form-control" required>
+              <input type="number" name="cantidad" class="form-control" id="cantidad" required>
               <div class="invalid-feedback">La cantidad es requerida!</div>
             </div>
 
@@ -149,28 +149,33 @@
   <script>
 
 
-
-
-
-    $(function() {
-
-     
+$(function() {
       
 // Agregar venta..
 $("#form_agregar_venta").submit(function(e) {
-    e.preventDefault(); // Evita el envío del formulario por defecto
+    e.preventDefault(); 
     const formData = new FormData(this);
 
-    var stock = parseInt($("#producto option:selected").data("stock"), 10); // Obtener el stock como un número entero
-    var cantidadCompra = parseInt($("#cantidad").val(), 10); // Obtener la cantidad de compra como un número entero
+    var stock = parseInt($("#producto option:selected").data("stock"), 10); // Obtener el stock entero
+    var cantidadCompra = parseInt($("#cantidad").val(), 10); // Obtener la cantidad de compra entero
 
     if (cantidadCompra > stock) {
       Swal.fire({
       icon: 'warning',
       title: 'No hay Stock suficiente',
-      text: 'Intenta de nuevo',
-})
-    } else if (!this.checkValidity()) {
+      text: 'solo quedan ' + stock + ' unidades, estás intentando comprar ' + cantidadCompra,
+    }) 
+    } 
+  else if(cantidadCompra <= 0){
+   
+   Swal.fire({
+   icon: 'warning',
+   title: 'agrega mínimo 1 unidad',
+   text: 'La cantidad no puede ser vacia ni negativa',
+   })
+   }
+    
+    else if (!this.checkValidity()) {
         $(this).addClass('was-validated');
     } else {
         $("#boton_agregar_venta").text("Agregando...");
@@ -183,30 +188,36 @@ $("#form_agregar_venta").submit(function(e) {
             processData: false,
             dataType: 'json',
             success: function(response) {
+               
                 $("#modal_agregar_venta").modal('hide');
-                $("#form_agregar_venta")[0].reset();
+                $("#form_agregar_venta")[0].reset(); 
+                $("#infoStock").empty();
                 $("#form_agregar_venta").removeClass('was-validated');
-                Swal.fire(
-                    'Agregado !',
-                    response.message,
-                    'success'
-                );
-                fetchAllPosts();
 
+
+                Swal.fire({
+                     title: 'Agregado !',
+                     text: response.message,
+                     icon: 'success'
+                    }).then(function() {
+                   // Después de que el usuario cierre la alerta, recarga la página
+                     window.location.reload();
+                    });
+                fetchAllPosts() 
+             
                 $("#boton_agregar_venta").text("Agregar Venta");
             }
         });
     }
 });
 
-/// Validar Stock
-$("#producto").change(function() {
-                var productoSeleccionado = $("#producto").val();
-                var stock = $("#producto option:selected").data("stock");
-                $("#infoStock").html("Del producto: " + productoSeleccionado + ", hay: " + stock + " unidades en stock");
+       /// Informar Stock Stock
+      $("#producto").change(function() {
+          var productoSeleccionado = $("#producto").val();
+          var stock = $("#producto option:selected").data("stock");
+          $("#infoStock").html("De este producto" + " hay: " + stock + " unidades en stock");
             
-            });
-
+        });
 
 
       // Editar Venta
@@ -221,7 +232,7 @@ $("#producto").change(function() {
             $("#pid").val(response.message.id);
           
             $("#producto").val(response.message.producto);
-            $("#cantidad").val(response.message.cantidad);
+            $("#cantidad").val(response.message.cantidad); 
           }
         });
       });
@@ -310,6 +321,7 @@ $("#producto").change(function() {
       }
     });
 
+    
 
 
 
