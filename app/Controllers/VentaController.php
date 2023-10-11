@@ -24,11 +24,19 @@ class VentaController extends BaseController
         
     }
 
+    public function cargarProductos(){
+        $model = new Producto();
+          $prod = $model->findAll();
+            echo json_encode($prod);
+    }
+
 
       // agregar venta
       public function agregar() {
-       
 
+        $id_producto = $this->request->getPost('id_producto'); // obtener el id del producto para actualizar stock
+
+       
         $datos = [
         
             'producto' => $this->request->getPost('producto'),
@@ -37,12 +45,12 @@ class VentaController extends BaseController
         ];
    
         $modelProducto = new Producto();
-        $producto = $modelProducto->where('id', $datos['producto'])->first();
+        $producto = $modelProducto->where('id', $id_producto)->first();
         $stockActual = $producto['stock_producto'];
         $cantidadComprada = $datos['cantidad'];
            
         $nuevoStock = $stockActual - $cantidadComprada;
-        $id = $datos['producto'];
+       //  $id = $datos['producto'];
 
 
  
@@ -51,7 +59,7 @@ class VentaController extends BaseController
         'stock_producto' => $nuevoStock
     ];
 
-    $modelProducto->update($id, $updateData);
+    $modelProducto->update($id_producto, $updateData);
 
     $ModelVenta = new Venta();
     $ModelVenta->save($datos);

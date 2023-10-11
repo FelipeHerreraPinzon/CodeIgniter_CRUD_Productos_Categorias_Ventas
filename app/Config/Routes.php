@@ -31,6 +31,12 @@ $routes->get('venta/eliminar/(:num)', 'VentaController::eliminar/$1', ['as'=>'el
 $routes->post('venta/actualizar', 'VentaController::actualizar', ['as'=>'actualizar_venta']);
 
 
+$routes->get('cargarProductos', 'VentaController::cargarProductos');
+
+
+/*
+
+*/
 
 
 

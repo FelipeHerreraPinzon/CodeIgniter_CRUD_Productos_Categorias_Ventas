@@ -26,7 +26,7 @@
                                 <?php
                                 foreach($categorias as $categoria)
                                 {
-                                    echo '<option value="'.$categoria["id"].'">'.$categoria["nombre_categoria"].'</option>';
+                                    echo '<option value="'.$categoria["nombre_categoria"].'">'.$categoria["nombre_categoria"].'</option>';
                                 }
                                 ?>
             

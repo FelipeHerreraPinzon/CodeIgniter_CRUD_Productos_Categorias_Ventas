@@ -18,13 +18,15 @@
               <label>Producto</label>
               <select name="producto" class="form-control" id="producto" required>
           
-              <option disabled selected>Seleccione un producto</option>
+              <option disabled selected></option> 
+              
               <?php
                       foreach($productos as $producto)
                       {
-                          echo '<option value="'.$producto["id"].'" data-stock="'.$producto["stock_producto"].'" data-id="'.$producto["id"].'">'.$producto["nombre_producto"].'</option>';
+                          echo '<option value="'.$producto["nombre_producto"].'" data-stock="'.$producto["stock_producto"].'" data-id="'.$producto["id"].'">'.$producto["nombre_producto"].'</option>';
                       }
               ?>
+
             
               </select>
               <div class="invalid-feedback">Producto es obligatorio!</div>
@@ -150,6 +152,30 @@
 
 
 $(function() {
+
+/*
+  let $producto = document.getElementById('producto')
+
+          $.ajax({
+                url:"<?php // echo base_url('cargarProductos'); ?>",
+                method:"GET",
+                dataType:"JSON",
+                success:function(data)
+                {
+                  let template = '<option class="form-control" selected disabled>-- Seleccione --</option>'
+    
+    respuestas.forEach(respuesta => {
+        template += `<option class="form-control" value="${respuesta.codProvincia}">${respuesta.nomProvincia}</option>`;
+    })
+
+    $producto.innerHTML = template;
+                }
+            });
+
+*/
+
+
+
       
 // Agregar venta..
 $("#form_agregar_venta").submit(function(e) {
@@ -157,6 +183,7 @@ $("#form_agregar_venta").submit(function(e) {
     const formData = new FormData(this);
 
     var stock = parseInt($("#producto option:selected").data("stock"), 10); // Obtener el stock entero
+    var id_producto = parseInt($("#producto option:selected").data("id"), 10); // Obtener el id entero
     var cantidadCompra = parseInt($("#cantidad").val(), 10); // Obtener la cantidad de compra entero
 
     if (cantidadCompra > stock) {
@@ -179,6 +206,9 @@ $("#form_agregar_venta").submit(function(e) {
         $(this).addClass('was-validated');
     } else {
         $("#boton_agregar_venta").text("Agregando...");
+
+          formData.append('id_producto', id_producto);
+
         $.ajax({
             url: '<?= base_url('venta/agregar') ?>',
             method: 'post',

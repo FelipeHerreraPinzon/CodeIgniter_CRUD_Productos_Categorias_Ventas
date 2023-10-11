@@ -20,8 +20,8 @@ class Producto extends Migration
                 'constraint' => 255,
             ],
             'categoria_producto' => [
-                'type' => 'INT',
-                'constraint' => 11,
+                'type' => 'VARCHAR',
+                'constraint' => 255,
             ],
             'stock_producto' => [
                 'type' => 'INT',

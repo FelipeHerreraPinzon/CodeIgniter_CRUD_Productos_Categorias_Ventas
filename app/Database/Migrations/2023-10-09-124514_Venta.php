@@ -16,8 +16,8 @@ class Venta extends Migration
                 'auto_increment' => true,
             ],
             'producto' => [
-                'type' => 'INT',
-                'constraint' => 11,
+                'type' => 'VARCHAR',
+                'constraint' => 255,
             ],
             'cantidad' => [
                 'type' => 'INT',
